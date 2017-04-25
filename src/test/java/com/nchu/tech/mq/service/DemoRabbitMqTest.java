@@ -1,5 +1,6 @@
 package com.nchu.tech.mq.service;
 
+import com.nchu.tech.mq.module.Person;
 import com.nchu.tech.mq.sender.CopyDemoSender;
 import com.nchu.tech.mq.sender.DemoSender;
 import org.junit.Test;
@@ -45,5 +46,21 @@ public class DemoRabbitMqTest {
             this.demoSenderBackup.sender(i);
             TimeUnit.SECONDS.sleep(1);
         }
+    }
+
+    @Test
+    public void testObjectSender() throws Exception {
+        for (int i = 0; i < 10; i++) {
+            Person person = new Person();
+            person.setId(String.valueOf(System.currentTimeMillis()));
+            person.setAge(10);
+            person.setGender("M");
+            person.setName(String.format("James %d", i));
+            this.demoSender.senderObject(person);
+
+            TimeUnit.SECONDS.sleep(1);
+
+        }
+
     }
 }
